@@ -1,0 +1,93 @@
+addprofile - expected results - created, invalid parameters
+curl -X POST http://localhost:3002/profile -H "Content-Type: application/json" -d "{\"userName\": \"varni4\", \"fullName\": \"varni4\", \"password\": \"password123\"}"
+
+curl -X POST http://localhost:3002/profile -H "Content-Type: application/json" -d "{\"userName\": \"varni123\", \"fullName\": \"varni123\", \"password\": \"\"}"
+
+
+
+Followfriend - expected results - Follow, same user, user not in database, already followed
+curl -X PUT http://localhost:3002/followFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni4\"}"
+
+curl -X PUT http://localhost:3002/followFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni\"}"
+
+curl -X PUT http://localhost:3002/followFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"Ajay\"}"
+
+curl -X PUT http://localhost:3002/followFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni12\"}"
+
+
+
+
+
+unFollowfriend - expected results - unFollowed, same user, user not in database, not following
+curl -X PUT http://localhost:3002/unfollowFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni12\"}"
+
+curl -X PUT http://localhost:3002/unfollowFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni\"}"
+
+curl -X PUT http://localhost:3002/unfollowFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"Ajay\"}"
+
+curl -X PUT http://localhost:3002/unfollowFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni12\"}"
+
+
+
+
+Likesong - invalid song, invalid user, like song, already liked, null user
+curl -X PUT http://localhost:3002/likeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId23\"}"
+
+curl -X PUT http://localhost:3002/likeSong -H "Content-Type: application/json" -d "{\"userName\": \"Ajay\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/likeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/likeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/likeSong -H "Content-Type: application/json" -d "{\"userName\": \"\", \"songId\": \"songId\"}"
+
+
+
+Unlikesong - invalid song, invalid user, not liked so can't unlike, song unliked and removed from playlist
+curl -X PUT http://localhost:3002/unlikeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId123\"}"
+
+curl -X PUT http://localhost:3002/unlikeSong -H "Content-Type: application/json" -d "{\"userName\": \"Ajay\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/unlikeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/unlikeSong -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"songId\": \"songId\"}"
+
+
+
+
+Sendsong - sent successfully, same users, not exists user, not following, song not found
+
+
+curl -X PUT http://localhost:3002/sendSongToFriend^
+     -H "Content-Type: application/json" ^
+     -d "{\"senderUserName\": \"varni\", \"receiverUserName\": \"varni4\", \"songId\": \"songId2\"}"
+
+curl -X PUT http://localhost:3002/sendSongToFriend^
+     -H "Content-Type: application/json" ^
+     -d "{\"senderUserName\": \"varni\", \"receiverUserName\": \"varni\", \"songId\": \"songId\"}"
+
+curl -X PUT http://localhost:3002/sendSongToFriend^
+     -H "Content-Type: application/json" ^
+     -d "{\"senderUserName\": \"ajay\", \"receiverUserName\": \"varni\", \"songId\": \"songid\"}"
+
+curl -X PUT http://localhost:3002/sendSongToFriend^
+     -H "Content-Type: application/json" ^
+     -d "{\"senderUserName\": \"varni\", \"receiverUserName\": \"varni123\", \"songId\": \"songid\"}"
+
+curl -X PUT http://localhost:3002/sendSongToFriend^
+     -H "Content-Type: application/json" ^
+     -d "{\"senderUserName\": \"varni\", \"receiverUserName\": \"varni12\", \"songId\": \"songid45\"}"
+
+
+Blockuser - block friend successfully, Users same, user does not exists, already blocked
+curl -X PUT http://localhost:3002/blockFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni12\", \"friendUserName\": \"varni4\"}"
+
+curl -X PUT http://localhost:3002/blockFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni\"}"
+
+curl -X PUT http://localhost:3002/blockFriend -H "Content-Type: application/json" -d "{\"userName\": \"Ajay\", \"friendUserName\": \"Varni\"}"
+
+curl -X PUT http://localhost:3002/blockFriend -H "Content-Type: application/json" -d "{\"userName\": \"varni\", \"friendUserName\": \"varni12\"}"
+
+
+curl -X GET "http://localhost:3002/getAllFriendFavouriteSongTitles/JohnDoe"
+curl -X GET "http://localhost:3002/getAllFriendFavouriteSongTitles/varni"
